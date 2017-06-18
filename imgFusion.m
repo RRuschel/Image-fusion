@@ -95,7 +95,7 @@ if(opts == 1)
     title('Fused image');
 elseif(opts == 2)
     cd(folder);
-    imwrite(F,'fused.jpg');
+    imwrite(uint8(F),'fused.jpg');
     cd ..
 end
 
