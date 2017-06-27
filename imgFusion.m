@@ -51,12 +51,15 @@ for i=1:N %Read all the images on the folder
         img_g(:,:,i) = img;
     end
     %Equation 12
-    H = abs(conv2(img_g(:,:,i),L,'same'));
+    H = abs(imfilter(img_g(:,:,i),L,'replicate'));
     %Equation 13
-    S(:,:,i) = conv2(H,g,'same');
+    S(:,:,i) = imfilter(H,g,'replicate');
 end
 
 cd ..
+
+S = S + 1e-12; 
+S = S./repmat(sum(S,3),[1 1 N]);%Normalize to [0-1]
 
 [~,idx] = max(S,[],3);
 
@@ -78,13 +81,13 @@ Wd = normalizeWeights(Wd,N);
 %F = Eq. 17,18 and 19
 if(color ==1)
     for i=1:N
-        B = convn(img_c(:,:,:,i),Z,'same');
+        B = imfilter(img_c(:,:,:,i),Z,'replicate');
         D = img_c(:,:,:,i) - B;
         F = F + B.*repmat(Wb(:,:,i),[1 1 3]) + D.*repmat(Wd(:,:,i),[1 1 3]);
     end
 else
     for i=1:N
-        B = conv2(img_g(:,:,i),Z,'same');
+        B = imfilter(img_c(:,:,i),Z,'replicate');
         D = img_g(:,:,i) - B;
         F = F + B.*Wd(:,:,i) + D.*Wd(:,:,i);
     end
