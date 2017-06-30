@@ -7,7 +7,7 @@ function [ F ] = imgFusion( folder, opts )
 %folder = folder name containing the images to be fused
 %opts = 1 to display result, 2 to save it into a jpeg file
 
-%Code by Raphael Ruschel dos Santos 17/06/2017
+%Code by Raphael Ruschel dos Santos, Phellippe Pinheiro and Israel Gonçaves de Oliveira
 
 
 assert(isdir(folder)==1,strcat('Folder "', folder, '" was not found'));
